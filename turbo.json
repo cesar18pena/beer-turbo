@@ -1,0 +1,17 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "dev": {
+      "cache": false,
+      "outputs": [],
+      "dependsOn": [],
+      "command": "npm run dev --workspace=frontend & npm start --workspace=backend"
+    },
+    "prod": {
+      "cache": false,
+      "outputs": [],
+      "dependsOn": [],
+      "command": "npm run build --workspace=frontend & npm start --workspace=backend"
+    }
+  }
+}
