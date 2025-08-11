@@ -7,7 +7,7 @@ app.get("/", (req, res) => {
   res.send("Backend running");
 });
 
-app.use("/api/products", productsRouter);
+app.use("/api", productsRouter);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
