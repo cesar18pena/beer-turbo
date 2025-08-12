@@ -1,8 +1,8 @@
 import React from "react";
 import "./Header.less";
 
-const avatarSrc = new URL("../../assets/Sin-título-1.jpg", import.meta.url)
-  .href;
+// const avatarSrc = new URL("../../assets/Sin-título-1.jpg", import.meta.url)
+//   .href;
 
 const Header = ({ userName }) => (
   <header className="header">
@@ -16,7 +16,7 @@ const Header = ({ userName }) => (
       <h1>Welcome Back!</h1>
     </div>
     <div className="avatar">
-      <img src={avatarSrc} alt="User avatar" />
+      {/* <img src={avatarSrc} alt="User avatar" /> */}
     </div>
   </header>
 );
