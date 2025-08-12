@@ -1,66 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useProductData } from "../../hooks/useProductData";
+import { useProductImage } from "../../hooks/useProductImage";
 import "./ProductDetailsPage.less";
 
 const ProductDetailsPage = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
-  const [product, setProduct] = useState(null);
-  const [selectedSku, setSelectedSku] = useState(null);
-  const [stockInfo, setStockInfo] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await fetch(`http://localhost:3001/api/products`);
-        const products = await response.json();
-        const found = products.find((p) => {
-          const id = productId.split("-")[0]; // Extract the ID part before the brand name
-          return p.id.toString() === id;
-        });
-        if (!found) {
-          throw new Error("Product not found");
-        }
-        setProduct(found);
-        setSelectedSku(found.skus[0]?.code);
-      } catch (err) {
-        setError(err.message);
-        window.alert(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, [productId]);
-
-  useEffect(() => {
-    if (!selectedSku) return;
-
-    const fetchStockPrice = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3001/api/stock-price/${selectedSku}`
-        );
-        const data = await response.json();
-        setStockInfo(data);
-      } catch (err) {
-        setError("Failed to fetch stock information");
-        window.alert("Failed to fetch stock information");
-      }
-    };
-
-    fetchStockPrice();
-    const interval = setInterval(fetchStockPrice, 5000);
-
-    return () => clearInterval(interval);
-  }, [selectedSku]);
-
-  const handleSkuSelect = (skuCode) => {
-    setSelectedSku(skuCode);
-  };
+  const { product, loading, error, stockInfo, selectedSku, handleSkuSelect } =
+    useProductData(productId);
 
   const handleAddToCart = () => {
     window.alert(`Adding to cart: ${product.brand} - ${selectedSku}
